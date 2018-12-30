@@ -23,4 +23,22 @@ class DocScraper
        end
       class_methods
     end
+
+
+
+  def self.scrape_method_content_from_class_page(ind_class)
+   method_dets = []
+   class_instance_link = ind_class.source_link
+   class_instance_data = Nokogiri::HTML(open(class_instance_link))
+     class_instance_data.css(".method-detail").each do |section|
+          method_hash = {}
+          method_hash[:headings] =section.xpath("div [@class='method-heading'] / span").text
+          method_hash[:mini_description] = section.xpath("div / p[1]").text.split("\n").join(' ')
+          method_hash[:full_description] = section.xpath("div / p").text  #Not currently used
+          method_hash[:code] = section.css(".ruby").text.split("\n")
+          method_dets << method_hash
+     end
+    method_dets
+  end
+
 end

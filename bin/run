@@ -2,4 +2,4 @@
 
 require_relative '../lib/ruby_what'
 
-CommandLineInterface.new.run 
+CommandLineInterface.new.setup
