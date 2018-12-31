@@ -1,4 +1,4 @@
-class RubyClass < ActiveRecord::Base
+class RubyWhat::RubyClass < ActiveRecord::Base
   has_many :ruby_methods
   validates :name, uniqueness: true
 
@@ -16,7 +16,7 @@ end
 
 
 def create_and_associate_methods_for_this_class_instance
-  method_dets = DocScraper.scrape_method_data_from_this_class_page(self)
+  method_dets = RubyWhat::DocScraper.scrape_method_data_from_this_class_page(self)
       method_dets.each do |hash|
         self.ruby_methods.create(
           name: hash[:name],

@@ -1,4 +1,4 @@
-module RubyWhat
+class RubyWhat
 
 end
 
