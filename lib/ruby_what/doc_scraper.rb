@@ -1,4 +1,4 @@
-class DocScraper
+class RubyWhat::DocScraper
   @@core_path = "https://ruby-doc.org/core-2.3.1/"
   attr_accessor :current_class
 
@@ -8,7 +8,7 @@ class DocScraper
       core_page.xpath("//div [@id='class-index']/div[2]/p/a").each do |class_name|
         if !class_name.children.text.include?("::") && !class_name.children.text.include?("Error")
           source_url = "#{@@core_path + class_name}.html"
-          RubyClass.create(:name => class_name.text, :link_id => source_url)
+          RubyWhat::RubyClass.create(:name => class_name.text, :link_id => source_url)
         end
     end
   end

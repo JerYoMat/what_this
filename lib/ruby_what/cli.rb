@@ -1,14 +1,14 @@
 require 'pry'
 
-class CommandLineInterface
+class RubyWhat::CommandLineInterface
   attr_accessor :current_class, :current_method, :user_input
 
   def setup
     #Get the names of the ruby versions' different classes and instanstiate a RubyClass object for each.
-      DocScraper.scrape_and_create_classes
+      RubyWhat::DocScraper.scrape_and_create_classes
     #From each class page scrape the method information
     #Create a RubyMethod for each method listed on the class page through RubyClass to include association.
-      RubyClass.create_methods_for_each_ruby_class_page
+      RubyWhat::RubyClass.create_methods_for_each_ruby_class_page
   end
 
 
@@ -41,7 +41,7 @@ class CommandLineInterface
     puts "Type exit to leave or press enter to look up another method"
     @user_input = gets.strip
     @current_class = nil
-    @current_method = nil 
+    @current_method = nil
     run if  @user_input.downcase != "exit"
 
   end
@@ -77,7 +77,7 @@ end
 
 
   def set_class(string)
-    RubyClass.all.select{ |ind_c| ind_c.name.upcase == string.upcase}.first
+    RubyWhat::RubyClass.all.select{ |ind_c| ind_c.name.upcase == string.upcase}.first
   end
 
 
@@ -99,17 +99,17 @@ end
 
   def printf_class_list
     counter = 0
-    rows = RubyClass.all.count.to_f / 4.0
-    remain = RubyClass.all.count % 4
+    rows = RubyWhat::RubyClass.all.count.to_f / 4.0
+    remain = RubyWhat::RubyClass.all.count % 4
     rows.floor.times do
       printf(" %2d.%-22s %2d.%-22s %2d.%-22s %2d.%-22s \n",
-        counter += 1, RubyClass.all[counter - 1].name,
-        counter += 1, RubyClass.all[counter - 1].name,
-        counter += 1, RubyClass.all[counter - 1].name,
-        counter += 1, RubyClass.all[counter - 1].name)
+        counter += 1, RubyWhat::RubyClass.all[counter - 1].name,
+        counter += 1, RubyWhat::RubyClass.all[counter - 1].name,
+        counter += 1, RubyWhat::RubyClass.all[counter - 1].name,
+        counter += 1, RubyWhat::RubyClass.all[counter - 1].name)
     end
     remain.times do
-      printf(" %2d.%-22s", counter += 1, RubyClass.all[counter - 1].name)
+      printf(" %2d.%-22s", counter += 1, RubyWhat::RubyClass.all[counter - 1].name)
     end
     printf("\n\n")
     puts "Type the name of the class to see available methods.".colorize(:mode => :bold)

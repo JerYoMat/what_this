@@ -12,7 +12,6 @@ ActiveRecord::Base.establish_connection(
 old_logger = ActiveRecord::Base.logger
 ActiveRecord::Base.logger = nil
 
-
 require 'sinatra'
 require 'active_record'
 require 'sqlite3'
@@ -24,7 +23,7 @@ require 'fileutils'
 require 'require_all'
 
 
-
+require_relative "../lib/ruby_what.rb"
 require_relative "../lib/ruby_what/doc_scraper"
 require_relative "../lib/ruby_what/ruby_class"
 require_relative "../lib/ruby_what/ruby_method"
