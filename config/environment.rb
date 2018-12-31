@@ -8,6 +8,9 @@ ActiveRecord::Base.establish_connection(
   :database => "db/#{ENV['SINATRA_ENV']}.sqlite"
 )
 
+#Turns off the SqlLogging
+old_logger = ActiveRecord::Base.logger
+ActiveRecord::Base.logger = nil
 
 
 require 'sinatra'

@@ -6,7 +6,7 @@ class DocScraper
   def self.scrape_and_create_classes
     core_page = Nokogiri::HTML(open(@@core_path))
       core_page.xpath("//div [@id='class-index']/div[2]/p/a").each do |class_name|
-        if !class_name.children.text.include?("::") && !class_name.children.text.include?("Error") 
+        if !class_name.children.text.include?("::") && !class_name.children.text.include?("Error")
           source_url = "#{@@core_path + class_name}.html"
           RubyClass.create(:name => class_name.text, :link_id => source_url)
         end
@@ -28,7 +28,8 @@ class DocScraper
         method_hash = {}
         method_hash[:name] = method_names[counter]
         counter += 1
-        method_hash[:headers] =section.xpath("div [@class='method-heading'] / span").text.split("click to toggle source")
+
+        method_hash[:headers] = section.xpath("div [@class='method-heading'] / span").text.split("click to toggle source")
         method_hash[:short_description] = section.xpath("div / p[1]").text.split("\n").join(' ')
         method_hash[:long_description] = section.xpath("div / p").text  #Not currently used
         method_hash[:sample_code] = section.css(".ruby").text.split("\n")

@@ -29,4 +29,26 @@ def create_and_associate_methods_for_this_class_instance
 end
 
 
+
+def printf_method_list
+
+      counter = 0
+    rows = self.ruby_methods.count.to_f / 3.00
+    remainder = self.ruby_methods.count % 3
+    rows.floor.times do
+      printf(" %3d.%-25s %3d.%-25s %3d.%-25s \n",
+        counter += 1, self.ruby_methods[counter - 1].name,
+        counter += 1, self.ruby_methods[counter - 1].name,
+        counter += 1, self.ruby_methods[counter - 1].name)
+    end
+    remainder.times do
+     printf(" %3d.%-25s", counter += 1, self.ruby_methods[counter - 1].name)
+    end
+    printf("\n")
+    puts 'Enter the name of the method or exit to quit'
+
+end
+
+
+
 end
