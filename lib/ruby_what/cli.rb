@@ -3,7 +3,8 @@ require 'pry'
 class RubyWhat::CommandLineInterface
   attr_accessor :current_class, :current_method, :user_input
 
-  def setup
+
+  def populate_db
     #Get the names of the ruby versions' different classes and instanstiate a RubyClass object for each.
       RubyWhat::DocScraper.scrape_and_create_classes
     #From each class page scrape the method information
@@ -38,10 +39,10 @@ class RubyWhat::CommandLineInterface
     if !@current_method.nil?
       @current_method.display_method_details
     end
-   if !user_wants_out?
-    sleep(3)
-    puts "Type exit to leave or press enter to look up another method"
-    get_user_input
+    if !user_wants_out?
+      sleep(3)
+      puts "Type exit to leave or press enter to look up another method"
+      get_user_input
     end
     RubyWhat::CommandLineInterface.new.run if !user_wants_out?
 
