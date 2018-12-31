@@ -15,46 +15,58 @@ class RubyWhat::CommandLineInterface
   def run
   @user_input = " "
 #First loop ensures that a @current_class is set
-  until !@current_class.nil? || @user_input.downcase == "exit"
+  until user_wants_out? || !@current_class.nil?
     prompt_text
-    @user_input = gets.strip
+    get_user_input
     set_current_class_and_method_if_valid unless @user_input == ""
-    if @current_class.nil?  && @user_input.downcase != "exit"
+    if @current_class.nil?  && !user_wants_out?
       printf_class_list
-      @user_input = gets.strip
+      get_user_input
       set_current_class_and_method_if_valid unless @user_input == ""
     end
   end
-
-  until !@current_method.nil? || @user_input.downcase == "exit"
-    if @current_method.nil? && @user_input.downcase != "exit"
-      @current_class.printf_method_list
-      @user_input = gets.strip
-      set_method_if_valid unless @user_input.downcase == "exit"
-    end
-   end
-
+#Second loop makes sure that a @current_method is set before moving on.
+  if !user_wants_out?
+    until !@current_method.nil? || user_wants_out?
+      if @current_method.nil?  && !user_wants_out?
+        @current_class.printf_method_list
+        get_user_input
+        set_method_if_valid unless user_wants_out?
+      end
+     end
+  end
     if !@current_method.nil?
       @current_method.display_method_details
     end
     sleep(3)
-    puts "Type exit to leave or press enter to look up another method"
-    @user_input = gets.strip
-    @current_class = nil
-    @current_method = nil
-    run if  @user_input.downcase != "exit"
+    puts "Type exit to leave or press enter to look up another method" unless user_wants_out?
+    get_user_input
+    RubyWhat::CommandLineInterface.new.run if !user_wants_out?
 
   end
 
 
 
+  def get_user_input
+    @user_input = gets.strip
+  end
+
+  def user_wants_out?
+    if @user_input.class == Array
+      false
+    elsif @user_input.class == String && @user_input.downcase == "exit"
+      true
+    else
+      false
+    end
+  end
 
 
 
 
-def set_method_if_valid
-@current_method = set_method(@current_class, @user_input) if set_method(@current_class, @user_input)
-end
+    def set_method_if_valid
+      @current_method = set_method(@current_class, @user_input) if set_method(@current_class, @user_input)
+    end
 
 
 
