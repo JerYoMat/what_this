@@ -22,7 +22,6 @@ class RubyWhat::CommandLineInterface
     if @current_class.nil?  && !user_wants_out?
       printf_class_list
       get_user_input
-      binding.pry
       set_current_class_and_method_if_valid unless @user_input == ""
     end
   end
@@ -39,9 +38,11 @@ class RubyWhat::CommandLineInterface
     if !@current_method.nil?
       @current_method.display_method_details
     end
-    sleep(3) unless user_wants_out?
-    puts "Type exit to leave or press enter to look up another method" unless user_wants_out?
-    get_user_input unless user_wants_out?
+   if !user_wants_out?
+    sleep(3)
+    puts "Type exit to leave or press enter to look up another method"
+    get_user_input
+    end
     RubyWhat::CommandLineInterface.new.run if !user_wants_out?
 
   end
