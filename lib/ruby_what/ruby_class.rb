@@ -15,21 +15,18 @@ end
 
 
 
-
 def create_and_associate_methods_for_this_class_instance
   method_dets = DocScraper.scrape_method_data_from_this_class_page(self)
-binding.pry 
-method_dets.each do |hash|
-
-  self.ruby_methods.create(
-    name: hash[:name],
-    headers: hash[:headers],
-    short_description: hash[:short_description],
-    long_description: hash[:long_description],
-    sample_code: hash[:sample_code]
-  )
-
-
+      method_dets.each do |hash|
+        self.ruby_methods.create(
+          name: hash[:name],
+          headers: hash[:headers],
+          short_description: hash[:short_description],
+          long_description: hash[:long_description],
+          sample_code: hash[:sample_code]
+        )
+      end
 end
-end
+
+
 end

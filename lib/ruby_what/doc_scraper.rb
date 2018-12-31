@@ -6,7 +6,7 @@ class DocScraper
   def self.scrape_and_create_classes
     core_page = Nokogiri::HTML(open(@@core_path))
       core_page.xpath("//div [@id='class-index']/div[2]/p/a").each do |class_name|
-        if !class_name.children.text.include?("::")
+        if !class_name.children.text.include?("::") && !class_name.children.text.include?("Error") 
           source_url = "#{@@core_path + class_name}.html"
           RubyClass.create(:name => class_name.text, :link_id => source_url)
         end
