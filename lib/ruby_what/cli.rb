@@ -13,25 +13,36 @@ class CommandLineInterface
 
 
   def run
-
+  @user_input = " "
+#First loop ensures that a @current_class is set
+  until !@current_class.nil? || @user_input.downcase == "exit"
     prompt_text
     @user_input = gets.strip
     set_current_class_and_method_if_valid unless @user_input == ""
     if @current_class.nil?  && @user_input.downcase != "exit"
       printf_class_list
       @user_input = gets.strip
-      set_current_class_and_method_if_valid
+      set_current_class_and_method_if_valid unless @user_input == ""
     end
+  end
 
+  until !@current_method.nil? || @user_input.downcase == "exit"
     if @current_method.nil? && @user_input.downcase != "exit"
       @current_class.printf_method_list
       @user_input = gets.strip
-      set_method_if_valid
+      set_method_if_valid unless @user_input.downcase == "exit"
     end
+   end
 
-    if !@current_method.nil? && @user_input.downcase != "exit"
+    if !@current_method.nil?
       @current_method.display_method_details
     end
+    sleep(3)
+    puts "Type exit to leave or press enter to look up another method"
+    @user_input = gets.strip
+    @current_class = nil
+    @current_method = nil 
+    run if  @user_input.downcase != "exit"
 
   end
 

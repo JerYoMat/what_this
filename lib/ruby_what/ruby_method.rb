@@ -6,9 +6,8 @@ class RubyMethod < ActiveRecord::Base
           parent_id = self.ruby_class_id
           class_instance  =  RubyClass.find(parent_id)
           puts ''
-          puts '  Class: ' + class_instance.name.colorize(:mode => :bold) + ' Method: ' + self.name.colorize(:color => :red, :mode => :bold)
-          printf("\t %s \n", self.short_description.colorize(:mode => :italic))
-binding.pry
+          puts 'Class: ' + class_instance.name.colorize(:mode => :bold, :color => :green) + ' Method: ' + self.name.colorize(:color => :red, :mode => :bold)
+          printf("%s \n", self.short_description.colorize(:mode => :italic))
           self.headers.each do |heading|
            printf("\t#{heading.colorize(:light_blue)}\n")
           end

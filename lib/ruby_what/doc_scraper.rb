@@ -30,6 +30,7 @@ class DocScraper
         counter += 1
 
         method_hash[:headers] = section.xpath("div [@class='method-heading'] / span").text.split("click to toggle source")
+
         method_hash[:short_description] = section.xpath("div / p[1]").text.split("\n").join(' ')
         method_hash[:long_description] = section.xpath("div / p").text  #Not currently used
         method_hash[:sample_code] = section.css(".ruby").text.split("\n")
